@@ -1,0 +1,134 @@
+/* 只维护指定的字段 */
+
+import { useHistory } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { useSelector, store } from '../store';
+import { QueryObject } from '../typing';
+import { OptionsContext } from '../context';
+import { queryObject as defaultQueryObject } from '../dummy/queryObject';
+
+/**
+ * 从 store 中自动同步到 url
+ */
+export function useSyncFromStore() {
+  const { urlParamNames } = useContext(OptionsContext);
+  const history = useHistory();
+  const { page, size, filter, sorter } = useSelector(
+    (state) => state.queryObject
+  );
+  useEffect(() => {
+    if (urlParamNames === undefined) {
+      return;
+    }
+    const usp = new URLSearchParams(history.location.search);
+    if (page !== undefined) {
+      usp.set(urlParamNames.PAGE_PARAM_NAME, serialize(page));
+    }
+    if (size !== undefined) {
+      usp.set(urlParamNames.SIZE_PARAM_NAME, serialize(size));
+    }
+    if (filter !== undefined) {
+      usp.set(urlParamNames.FILTER_PARAM_NAME, serialize(filter));
+    }
+    if (sorter !== undefined) {
+      usp.set(urlParamNames.SORTER_PARAM_NAME, serialize(sorter));
+    }
+    history.push({
+      ...history.location,
+      search: usp.toString(),
+    });
+  }, [urlParamNames, page, size, filter, sorter, history]);
+}
+
+/**
+ * 从 URL 初始化参数到 store
+ */
+export function useInitParamsFromUrl() {
+  const { urlParamNames } = useContext(OptionsContext);
+
+  useEffect(() => {
+    if (urlParamNames === undefined) {
+      return;
+    }
+    const usp = new URLSearchParams(window.location.search);
+    const page = usp.get(urlParamNames.PAGE_PARAM_NAME);
+    const size = usp.get(urlParamNames.SIZE_PARAM_NAME);
+    const filter = usp.get(urlParamNames.FILTER_PARAM_NAME);
+    const sorter = usp.get(urlParamNames.SORTER_PARAM_NAME);
+    store.dispatch({
+      type: 'SYNC_QUERY_TO_STORE',
+      updater(state) {
+        state.queryObject = {
+          page: page === null ? defaultQueryObject.page : deserializePage(page),
+          size: size === null ? defaultQueryObject.size : deserializeSize(size),
+          filter:
+            filter === null
+              ? defaultQueryObject.filter
+              : deserializeFilter(filter),
+          sorter:
+            sorter === null
+              ? defaultQueryObject.sorter
+              : deserializeSorter(sorter),
+        };
+      },
+    });
+  }, [urlParamNames]);
+}
+
+/**
+ * react hook 使用查询参数
+ */
+export function useQueryParam() {
+  return useSelector((state) => state.queryObject);
+}
+
+/**
+ * 一次性获取查询参数
+ */
+export function getQueryParam() {
+  return store.getState().queryObject;
+}
+
+/**
+ * 设置单个查询参数
+ */
+export function setQueryParam(name: keyof QueryObject, value: any) {
+  store.dispatch({
+    type: `SET_QUERY_PARAM_${name}`,
+    updater(state) {
+      state.queryObject[name] = value;
+    },
+  });
+}
+
+/**
+ * 设置多个查询参数
+ */
+export function setQueryParams(queryObject: Partial<QueryObject>) {
+  store.dispatch({
+    type: 'SET_QUERY_PARAMS',
+    updater(state) {
+      state.queryObject = {
+        ...state.queryObject,
+        ...queryObject,
+      };
+    },
+  });
+}
+
+function serialize(value: any) {
+  return JSON.stringify(value);
+}
+
+function deserializePage(value: string) {
+  return parseInt(value, 10);
+}
+function deserializeSize(value: string) {
+  return parseInt(value, 10);
+}
+function deserializeFilter(value: string) {
+  return JSON.parse(value);
+}
+function deserializeSorter(value: string) {
+  return JSON.parse(value);
+}
