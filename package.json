@@ -4,6 +4,10 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liyuanqiu/react-crud-for-antd.git"
+  },
   "files": [
     "dist",
     "src"
