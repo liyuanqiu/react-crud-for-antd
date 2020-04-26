@@ -66,10 +66,10 @@ export const dataProvider: DataProvider = {
   async getMany(resource, params) {
     const { ids } = params;
     const result = await Promise.all(
-      ids.map(id => this.getOne(resource, { id }))
+      ids.map((id) => this.getOne(resource, { id }))
     );
     return {
-      data: result.map(item => item.data),
+      data: result.map((item) => item.data),
     };
   },
   async getManyReference(/* resource, params */) {
@@ -117,7 +117,7 @@ export const dataProvider: DataProvider = {
   async updateMany(resource, params) {
     const { ids, data } = params;
     const result = await Promise.all(
-      ids.map(id =>
+      ids.map((id) =>
         this.update(resource, {
           id,
           data,
@@ -127,7 +127,7 @@ export const dataProvider: DataProvider = {
       )
     );
     return {
-      data: result.map(item => item.data.id),
+      data: result.map((item) => item.data.id),
     };
   },
   async delete(resource, params) {
@@ -146,7 +146,7 @@ export const dataProvider: DataProvider = {
   },
   async deleteMany(resource, params) {
     const { ids } = params;
-    await Promise.all(ids.map(id => this.delete(resource, { id })));
+    await Promise.all(ids.map((id) => this.delete(resource, { id })));
     return {
       data: ids,
     };

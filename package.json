@@ -19,18 +19,20 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
+    "lint": "eslint -c .eslintrc.js --ignore-path .eslintignore --ext jsx --ext js --ext tsx --ext ts src stories",
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "peerDependencies": {
-    "antd": ">4.1",
-    "immer": "^6.0.3",
-    "react": ">=16.8",
-    "react-router-dom": ">=5.1",
-    "redux": ">=4",
-    "redux-logger": ">=3"
+    "antd": "^4.1.0",
+    "immer": "^6.0.0",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-router-dom": "^5.1.0",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.0",
+    "swr": "^0.2.0"
   },
   "husky": {
     "hooks": {
@@ -60,7 +62,6 @@
     "@types/react-dom": "^16.9.6",
     "@types/react-router-dom": "^5.1.4",
     "@types/redux-logger": "^3.0.7",
-    "antd": "^4.1.3",
     "babel-loader": "^8.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
@@ -69,20 +70,14 @@
     "husky": "^4.2.5",
     "prettier": "^2.0.4",
     "ra-core": "^3.4.1",
-    "react": "^16.13.1",
     "react-docgen-typescript-loader": "^3.7.2",
-    "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
-    "react-router-dom": "^5.1.2",
-    "redux": "^4.0.5",
-    "redux-logger": "^3.0.6",
     "ts-loader": "^7.0.0",
     "tsdx": "^0.13.2",
     "tslib": "^1.11.1",
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "ez-react-redux": "^0.2.0",
-    "swr": "^0.2.0"
+    "ez-react-redux": "^0.2.0"
   }
 }

@@ -4,7 +4,7 @@ import { AntdCrud, List, Filter, TextFilter } from '..';
 import { dataProvider } from './JPADataProvider';
 
 import 'antd/dist/antd.css';
-import { ColumnsType } from 'antd/lib/table';
+import type { ColumnsType } from 'antd/lib/table';
 
 export default {
   title: 'List',
