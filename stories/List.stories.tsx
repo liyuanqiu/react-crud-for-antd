@@ -7,11 +7,31 @@ import {
   TextFilter,
   TextColumn,
   CustomColumn,
+  I18NContext,
+  I18N,
 } from '..';
 import { dataProvider } from './JPADataProvider';
 
 import 'antd/dist/antd.css';
-import type { ColumnsType } from 'antd/lib/table';
+
+const i18n: I18N = {
+  filterTitle: 'Filter',
+  filterFieldTitle: 'Fields',
+  warning: 'Warning',
+  deleteSuccess: 'Successfully deleted one record',
+  deletePrompt:
+    "You'll delete one record, this operation can't be reverted, sure to perform?",
+  batchDeleteSuccess: 'Successfully deleted multiple records',
+  batchDeletePrompt:
+    "You'll delete multiple records, this operation can't be reverted, sure to perform?",
+  handleColumnName: 'Handle',
+  edit: 'Edit',
+  delete: 'Delete',
+  batchDelete: 'Batch Delete',
+  export: 'Export',
+  refreshData: 'Refresh Data',
+  create: 'Create',
+};
 
 export default {
   title: 'List',
@@ -30,19 +50,6 @@ export interface SLSWorker {
   status: boolean;
 }
 
-const columns: ColumnsType<SLSWorker> = [
-  {
-    dataIndex: 'id',
-    title: '数据库ID',
-    key: 'id',
-  },
-  {
-    dataIndex: 'name',
-    title: '规则名称',
-    key: 'name',
-  },
-];
-
 export function Default() {
   return (
     <BrowserRouter>
@@ -51,12 +58,25 @@ export function Default() {
           <TextFilter field="id" title="数据库ID" />
           <TextFilter field="name" title="规则名称" />
         </Filter>
-        <List columns={columns} entity="logCountRule">
+        <List entity="logCountRule">
           <TextColumn title="数据库ID" field="id" sortable />
           <TextColumn title="规则名称" field="name" sortable />
-          <CustomColumn title="规则名称2" key="name" dataIndex="name" sorter />
+          <CustomColumn title="规则名称2" dataIndex="name" sorter />
         </List>
       </AntdCrud>
+      <I18NContext.Provider value={i18n}>
+        <AntdCrud dataProvider={dataProvider}>
+          <Filter>
+            <TextFilter field="id" title="数据库ID" />
+            <TextFilter field="name" title="规则名称" />
+          </Filter>
+          <List entity="logCountRule">
+            <TextColumn title="数据库ID" field="id" sortable />
+            <TextColumn title="规则名称" field="name" sortable />
+            <CustomColumn title="规则名称2" dataIndex="name" sorter />
+          </List>
+        </AntdCrud>
+      </I18NContext.Provider>
     </BrowserRouter>
   );
 }

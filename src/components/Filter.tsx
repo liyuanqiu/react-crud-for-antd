@@ -3,14 +3,17 @@ import React, {
   useMemo,
   Children,
   isValidElement,
+  useContext,
 } from 'react';
 import { Descriptions, Card, Tag, Row, Col, Select } from 'antd';
 import difference from 'lodash/difference';
 import { FilterOutlined } from '@ant-design/icons';
 import { useFilter } from '../utils/filter';
+import { I18NContext } from '../context';
 
 export function Filter({ children }: PropsWithChildren<{}>) {
   const { filter, updateFilter } = useFilter();
+  const i18n = useContext(I18NContext);
 
   const filters = useMemo(() => {
     const __filters: {
@@ -46,11 +49,11 @@ export function Filter({ children }: PropsWithChildren<{}>) {
 
   return (
     <Card
-      title={<Tag icon={<FilterOutlined />}>筛选器</Tag>}
+      title={<Tag icon={<FilterOutlined />}>{i18n.filterTitle}</Tag>}
       bordered={false}
       extra={
         <Row gutter={8} style={{ width: 300 }}>
-          <Col span={6}>筛选字段</Col>
+          <Col span={6}>{i18n.filterFieldTitle}</Col>
           <Col span={18}>
             <Select<string[]>
               size="small"

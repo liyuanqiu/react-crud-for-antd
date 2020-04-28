@@ -44,3 +44,20 @@ export interface FilterInputProps {
   title: string;
   field: string;
 }
+
+export interface I18N {
+  filterTitle: string;
+  filterFieldTitle: string;
+  warning: string;
+  deleteSuccess: string;
+  deletePrompt: string;
+  batchDeleteSuccess: string;
+  batchDeletePrompt: string;
+  handleColumnName: string;
+  edit: string;
+  delete: string;
+  batchDelete: string;
+  export: string;
+  refreshData: string;
+  create: string;
+}

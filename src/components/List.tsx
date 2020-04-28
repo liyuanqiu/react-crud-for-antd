@@ -26,7 +26,7 @@ import {
   updateSorter,
 } from '../utils/table';
 import { useFilter } from '../utils/filter';
-import { DataProviderContext, OptionsContext } from '../context';
+import { DataProviderContext, OptionsContext, I18NContext } from '../context';
 import { useErrorNotification } from '../utils/notification';
 import { assert } from '../utils/common';
 import { parse } from './columnParser';
@@ -35,6 +35,7 @@ export interface ListProps {
   entity: string;
   tableSize?: TableProps<Record>['size'];
   enableDelete?: boolean;
+  enableEdit?: boolean;
   pageSizeOptions?: number[];
 }
 
@@ -44,9 +45,12 @@ export function List({
   entity,
   tableSize = 'small',
   enableDelete = true,
+  enableEdit = true,
   pageSizeOptions,
   children,
 }: PropsWithChildren<ListProps>) {
+  const i18n = useContext(I18NContext);
+
   const history = useHistory();
 
   const { pagination, page, size } = useTablePagination(pageSizeOptions);
@@ -125,14 +129,14 @@ export function List({
   const removeWithInteractive = useCallback(
     (record: Record) => {
       Modal.confirm({
-        title: '警告',
-        content: '您将删除一条配置，该操作无法撤销，确认执行？',
+        title: i18n.warning,
+        content: i18n.deletePrompt,
         icon: <ExclamationCircleOutlined />,
         onOk() {
           remove(record).then((deletedRecord) => {
             if (deletedRecord !== undefined) {
               Modal.success({
-                title: '删除成功',
+                title: i18n.deleteSuccess,
                 onOk() {
                   revalidate();
                 },
@@ -142,19 +146,19 @@ export function List({
         },
       });
     },
-    [remove, revalidate]
+    [remove, revalidate, i18n]
   );
 
   const batchRemoveWithInteractive = useCallback(
     (records: Record[]) => {
       Modal.confirm({
-        title: '警告',
-        content: '您将删除多条配置，该操作无法撤销，确认执行？',
+        title: i18n.warning,
+        content: i18n.batchDeletePrompt,
         icon: <ExclamationCircleOutlined />,
         onOk() {
           Promise.all(records.map((record) => remove(record))).then(() => {
             Modal.success({
-              title: '批量删除成功',
+              title: i18n.batchDeleteSuccess,
               onOk() {
                 revalidate();
               },
@@ -163,7 +167,7 @@ export function List({
         },
       });
     },
-    [remove, revalidate]
+    [remove, revalidate, i18n]
   );
 
   const columns = useMemo(() => {
@@ -176,32 +180,41 @@ export function List({
   }, [children]);
 
   const _columns = useMemo<ColumnsType<Record>>(
-    () => [
-      ...columns,
-      {
-        title: '操作',
-        key: '操作',
-        render(_, record) {
-          return (
-            <Space>
-              <Button size="small" type="primary" onClick={() => edit(record)}>
-                编辑
-              </Button>
-              {enableDelete ? (
-                <Button
-                  size="small"
-                  type="danger"
-                  onClick={() => removeWithInteractive(record)}
-                >
-                  删除
-                </Button>
-              ) : null}
-            </Space>
-          );
-        },
-      },
-    ],
-    [columns, edit, removeWithInteractive, enableDelete]
+    () =>
+      enableDelete || enableEdit
+        ? [
+            ...columns,
+            {
+              title: i18n.handleColumnName,
+              key: '操作',
+              render(_, record) {
+                return (
+                  <Space>
+                    {enableEdit ? (
+                      <Button
+                        size="small"
+                        type="primary"
+                        onClick={() => edit(record)}
+                      >
+                        {i18n.edit}
+                      </Button>
+                    ) : null}
+                    {enableDelete ? (
+                      <Button
+                        size="small"
+                        type="danger"
+                        onClick={() => removeWithInteractive(record)}
+                      >
+                        {i18n.delete}
+                      </Button>
+                    ) : null}
+                  </Space>
+                );
+              },
+            },
+          ]
+        : columns,
+    [columns, edit, removeWithInteractive, enableDelete, enableEdit, i18n]
   );
 
   function batchDelete() {
@@ -227,21 +240,21 @@ export function List({
               danger
               onClick={batchDelete}
             >
-              批量删除
+              {i18n.batchDelete}
             </Button>
           ) : null}
           <Button disabled icon={<DownloadOutlined />}>
-            导出
+            {i18n.export}
           </Button>
           <Button
             disabled={isValidating}
             icon={<RetweetOutlined />}
             onClick={revalidate}
           >
-            刷新数据
+            {i18n.refreshData}
           </Button>
           <Button type="primary" icon={<PlusOutlined />} onClick={create}>
-            新建
+            {i18n.create}
           </Button>
         </Space>
       </div>
