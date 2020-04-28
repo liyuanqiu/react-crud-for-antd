@@ -1,8 +1,15 @@
-import React, { useContext, useMemo, useCallback } from 'react';
+import React, {
+  useContext,
+  useMemo,
+  useCallback,
+  PropsWithChildren,
+  isValidElement,
+  Children,
+} from 'react';
 import { Table, Space, Button, Modal } from 'antd';
-import { TableProps, ColumnsType } from 'antd/lib/table';
+import type { TableProps, ColumnsType } from 'antd/lib/table';
 import useSWR from 'swr';
-import { SorterResult } from 'antd/lib/table/interface';
+import type { SorterResult } from 'antd/lib/table/interface';
 import { useHistory } from 'react-router-dom';
 import {
   ExclamationCircleOutlined,
@@ -11,6 +18,7 @@ import {
   RetweetOutlined,
   PlusOutlined,
 } from '@ant-design/icons';
+import type { Record } from 'ra-core';
 import {
   useTablePagination,
   useTableSorter,
@@ -21,26 +29,24 @@ import { useFilter } from '../utils/filter';
 import { DataProviderContext, OptionsContext } from '../context';
 import { useErrorNotification } from '../utils/notification';
 import { assert } from '../utils/common';
-import { Record } from 'ra-core';
+import { parse } from './columnParser';
 
 export interface ListProps {
   entity: string;
   tableSize?: TableProps<Record>['size'];
   enableDelete?: boolean;
   pageSizeOptions?: number[];
-  columns?: ColumnsType<Record>;
 }
 
 const dummyData: any[] = [];
-const dummyColumns: any[] = [];
 
 export function List({
   entity,
   tableSize = 'small',
   enableDelete = true,
   pageSizeOptions,
-  columns = dummyColumns,
-}: ListProps) {
+  children,
+}: PropsWithChildren<ListProps>) {
   const history = useHistory();
 
   const { pagination, page, size } = useTablePagination(pageSizeOptions);
@@ -159,6 +165,15 @@ export function List({
     },
     [remove, revalidate]
   );
+
+  const columns = useMemo(() => {
+    const __columns: ColumnsType<Record> = [];
+    Children.forEach(children, (element) => {
+      if (!isValidElement(element)) return;
+      __columns.push(parse(element));
+    });
+    return __columns;
+  }, [children]);
 
   const _columns = useMemo<ColumnsType<Record>>(
     () => [
