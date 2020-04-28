@@ -1,6 +1,13 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { AntdCrud, List, Filter, TextFilter, TextColumn } from '..';
+import {
+  AntdCrud,
+  List,
+  Filter,
+  TextFilter,
+  TextColumn,
+  CustomColumn,
+} from '..';
 import { dataProvider } from './JPADataProvider';
 
 import 'antd/dist/antd.css';
@@ -47,6 +54,7 @@ export function Default() {
         <List columns={columns} entity="logCountRule">
           <TextColumn title="数据库ID" field="id" sortable />
           <TextColumn title="规则名称" field="name" sortable />
+          <CustomColumn title="规则名称2" key="name" dataIndex="name" sorter />
         </List>
       </AntdCrud>
     </BrowserRouter>
