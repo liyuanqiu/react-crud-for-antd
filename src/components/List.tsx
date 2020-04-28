@@ -36,6 +36,8 @@ export interface ListProps {
   tableSize?: TableProps<Record>['size'];
   enableDelete?: boolean;
   enableEdit?: boolean;
+  enableExport?: boolean;
+  enableCreate?: boolean;
   pageSizeOptions?: number[];
 }
 
@@ -46,6 +48,8 @@ export function List({
   tableSize = 'small',
   enableDelete = true,
   enableEdit = true,
+  enableExport = true,
+  enableCreate = true,
   pageSizeOptions,
   children,
 }: PropsWithChildren<ListProps>) {
@@ -243,9 +247,11 @@ export function List({
               {i18n.batchDelete}
             </Button>
           ) : null}
-          <Button disabled icon={<DownloadOutlined />}>
-            {i18n.export}
-          </Button>
+          {enableExport ? (
+            <Button disabled icon={<DownloadOutlined />}>
+              {i18n.export}
+            </Button>
+          ) : null}
           <Button
             disabled={isValidating}
             icon={<RetweetOutlined />}
@@ -253,9 +259,11 @@ export function List({
           >
             {i18n.refreshData}
           </Button>
-          <Button type="primary" icon={<PlusOutlined />} onClick={create}>
-            {i18n.create}
-          </Button>
+          {enableCreate ? (
+            <Button type="primary" icon={<PlusOutlined />} onClick={create}>
+              {i18n.create}
+            </Button>
+          ) : null}
         </Space>
       </div>
       <div style={{ height: 4 }} />
