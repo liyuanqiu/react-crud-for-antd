@@ -3,7 +3,7 @@
 import { useHistory } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { useSelector, store } from '../store';
-import { QueryObject } from '../typing';
+import type { QueryObject } from '../typing';
 import { OptionsContext, ScopeContext } from '../context';
 import { queryObject as defaultQueryObject } from '../dummy/queryObject';
 

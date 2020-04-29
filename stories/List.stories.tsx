@@ -8,9 +8,9 @@ import {
   TextColumn,
   CustomColumn,
   I18NContext,
-  I18N,
   Scope,
 } from '..';
+import type { I18N } from '..';
 import { dataProvider } from './JPADataProvider';
 
 import 'antd/dist/antd.css';

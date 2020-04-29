@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { Options } from '../typing';
+import type { Options } from '../typing';
 
 const { PUBLIC_URL } = process.env;
 

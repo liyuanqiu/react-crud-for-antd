@@ -2,10 +2,10 @@ import React, {
   useContext,
   useMemo,
   useCallback,
-  PropsWithChildren,
   isValidElement,
   Children,
 } from 'react';
+import type { PropsWithChildren } from 'react';
 import { Table, Space, Button, Modal } from 'antd';
 import type { TableProps, ColumnsType } from 'antd/lib/table';
 import useSWR from 'swr';

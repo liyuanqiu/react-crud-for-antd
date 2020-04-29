@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { Input } from 'antd';
 import { useFilter } from '../../utils/filter';
-import { FilterInputProps } from '../../typing';
+import type { FilterInputProps } from '../../typing';
 
 export interface TextFilterProps extends FilterInputProps {}
 

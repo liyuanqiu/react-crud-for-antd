@@ -1,4 +1,5 @@
-import React, { PropsWithChildren, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import type { PropsWithChildren } from 'react';
 import { ScopeContext } from '../context';
 import { queryObject } from '../dummy/queryObject';
 import { useQueryParam, initQueryParams } from '../utils/query';

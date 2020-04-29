@@ -1,11 +1,9 @@
-import { applyMiddleware, Middleware } from 'redux';
+import { applyMiddleware } from 'redux';
+import { Middleware } from 'redux';
 import logger from 'redux-logger';
-import {
-  createStore,
-  useSelector as useSelectorOrigin,
-  Selector,
-} from 'ez-react-redux';
-import { State } from './typing';
+import { createStore, useSelector as useSelectorOrigin } from 'ez-react-redux';
+import type { Selector } from 'ez-react-redux';
+import type { State } from './typing';
 import { queryObject } from '../dummy/queryObject';
 import { scope } from '../dummy/scope';
 

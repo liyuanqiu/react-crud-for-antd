@@ -1,4 +1,5 @@
-import { useState, ReactText, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import type { ReactText } from 'react';
 import type {
   TablePaginationConfig,
   SorterResult,

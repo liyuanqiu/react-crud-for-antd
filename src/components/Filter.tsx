@@ -1,10 +1,5 @@
-import React, {
-  PropsWithChildren,
-  useMemo,
-  Children,
-  isValidElement,
-  useContext,
-} from 'react';
+import React, { useMemo, Children, isValidElement, useContext } from 'react';
+import type { PropsWithChildren } from 'react';
 import { Descriptions, Card, Tag, Row, Col, Select } from 'antd';
 import difference from 'lodash/difference';
 import { FilterOutlined } from '@ant-design/icons';

@@ -1,4 +1,4 @@
-import { QueryObject } from '../typing';
+import type { QueryObject } from '../typing';
 
 export const queryObject: QueryObject = {
   page: 0,

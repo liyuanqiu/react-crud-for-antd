@@ -1,5 +1,5 @@
 import React, { useMemo, PropsWithChildren } from 'react';
-import { Options } from '../typing';
+import type { Options } from '../typing';
 import { OptionsContext, DataProviderContext } from '../context';
 import { options as dummyOptions } from '../dummy/options';
 import type { DataProvider } from 'ra-core';

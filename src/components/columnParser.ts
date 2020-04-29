@@ -1,4 +1,5 @@
-import { ReactNode, isValidElement } from 'react';
+import { isValidElement } from 'react';
+import type { ReactNode } from 'react';
 import type { ColumnType } from 'antd/es/table';
 import type { Record } from 'ra-core';
 import { TextColumn } from './table-widgets/TextColumn';

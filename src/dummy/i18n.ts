@@ -1,4 +1,4 @@
-import { I18N } from '../typing';
+import type { I18N } from '../typing';
 
 export const i18n: I18N = {
   filterTitle: '筛选器',
