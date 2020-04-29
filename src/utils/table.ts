@@ -1,11 +1,12 @@
-import { useState, ReactText, useEffect } from 'react';
-import {
+import { useState, ReactText, useEffect, useContext } from 'react';
+import type {
   TablePaginationConfig,
   SorterResult,
   TableRowSelection,
 } from 'antd/es/table/interface';
 import { useQueryParam, setQueryParam, setQueryParams } from '../utils/query';
-import { QueryObject } from '../typing';
+import type { QueryObject } from '../typing';
+import { ScopeContext } from '../context';
 
 const defaultPageSizeOptions = [10, 20, 50, 100];
 
@@ -16,10 +17,11 @@ export function useTablePagination(
   page: number;
   size: number;
 } {
+  const scope = useContext(ScopeContext);
   const { page, size } = useQueryParam();
   useEffect(() => {
-    setQueryParam('size', pageSizeOptions[0]);
-  }, [pageSizeOptions]);
+    setQueryParam('size', pageSizeOptions[0], scope);
+  }, [pageSizeOptions, scope]);
   function handlePageChange(p: number, s?: number) {
     const changes: Partial<QueryObject> = {
       page: p - 1,
@@ -27,13 +29,16 @@ export function useTablePagination(
     if (s !== undefined) {
       changes.size = s;
     }
-    setQueryParams(changes);
+    setQueryParams(changes, scope);
   }
   function handleShowSizeChange(c: number, s: number) {
-    setQueryParams({
-      page: c - 1,
-      size: s,
-    });
+    setQueryParams(
+      {
+        page: c - 1,
+        size: s,
+      },
+      scope
+    );
   }
   return {
     pagination: {
@@ -58,8 +63,8 @@ export function useTableSorter() {
   return sorter;
 }
 
-export function updateSorter(s: SorterResult<any>) {
-  setQueryParam('sorter', [s.field, s.order]);
+export function updateSorter(s: SorterResult<any>, scope: string) {
+  setQueryParam('sorter', [s.field, s.order], scope);
 }
 
 export function useTableSelection<T = unknown>(): TableRowSelection<T> {

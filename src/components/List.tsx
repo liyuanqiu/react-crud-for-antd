@@ -26,7 +26,12 @@ import {
   updateSorter,
 } from '../utils/table';
 import { useFilter } from '../utils/filter';
-import { DataProviderContext, OptionsContext, I18NContext } from '../context';
+import {
+  DataProviderContext,
+  OptionsContext,
+  I18NContext,
+  ScopeContext,
+} from '../context';
 import { useErrorNotification } from '../utils/notification';
 import { assert } from '../utils/common';
 import { parse } from './columnParser';
@@ -54,6 +59,7 @@ export function List({
   children,
 }: PropsWithChildren<ListProps>) {
   const i18n = useContext(I18NContext);
+  const scope = useContext(ScopeContext);
 
   const history = useHistory();
 
@@ -103,7 +109,7 @@ export function List({
     ) {
       return;
     }
-    updateSorter(s as SorterResult<Record>);
+    updateSorter(s as SorterResult<Record>, scope);
   };
 
   const create = useCallback(() => {

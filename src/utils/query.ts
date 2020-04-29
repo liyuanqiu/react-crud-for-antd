@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { useSelector, store } from '../store';
 import { QueryObject } from '../typing';
-import { OptionsContext } from '../context';
+import { OptionsContext, ScopeContext } from '../context';
 import { queryObject as defaultQueryObject } from '../dummy/queryObject';
 
 /**
@@ -12,10 +12,9 @@ import { queryObject as defaultQueryObject } from '../dummy/queryObject';
  */
 export function useSyncFromStore() {
   const { urlParamNames } = useContext(OptionsContext);
+  const scope = useContext(ScopeContext);
   const history = useHistory();
-  const { page, size, filter, sorter } = useSelector(
-    (state) => state.queryObject
-  );
+  const { page, size, filter, sorter } = useSelector((state) => state[scope]);
   useEffect(() => {
     if (urlParamNames === undefined) {
       return;
@@ -45,6 +44,7 @@ export function useSyncFromStore() {
  */
 export function useInitParamsFromUrl() {
   const { urlParamNames } = useContext(OptionsContext);
+  const scope = useContext(ScopeContext);
 
   useEffect(() => {
     if (urlParamNames === undefined) {
@@ -58,7 +58,7 @@ export function useInitParamsFromUrl() {
     store.dispatch({
       type: 'SYNC_QUERY_TO_STORE',
       updater(state) {
-        state.queryObject = {
+        state[scope] = {
           page: page === null ? defaultQueryObject.page : deserializePage(page),
           size: size === null ? defaultQueryObject.size : deserializeSize(size),
           filter:
@@ -72,31 +72,39 @@ export function useInitParamsFromUrl() {
         };
       },
     });
-  }, [urlParamNames]);
+  }, [urlParamNames, scope]);
 }
 
 /**
  * react hook 使用查询参数
  */
 export function useQueryParam() {
-  return useSelector((state) => state.queryObject);
+  const scope = useContext(ScopeContext);
+  return useSelector((state) => state[scope]);
 }
 
 /**
  * 一次性获取查询参数
  */
-export function getQueryParam() {
-  return store.getState().queryObject;
+export function getQueryParam(scope: string) {
+  return store.getState()[scope];
 }
 
 /**
  * 设置单个查询参数
  */
-export function setQueryParam(name: keyof QueryObject, value: any) {
+export function setQueryParam(
+  name: keyof QueryObject,
+  value: any,
+  scope: string
+) {
   store.dispatch({
     type: `SET_QUERY_PARAM_${name}`,
     updater(state) {
-      state.queryObject[name] = value;
+      if (state[scope] === undefined) {
+        state[scope] = defaultQueryObject;
+      }
+      state[scope][name] = value;
     },
   });
 }
@@ -104,12 +112,18 @@ export function setQueryParam(name: keyof QueryObject, value: any) {
 /**
  * 设置多个查询参数
  */
-export function setQueryParams(queryObject: Partial<QueryObject>) {
+export function setQueryParams(
+  queryObject: Partial<QueryObject>,
+  scope: string
+) {
   store.dispatch({
     type: 'SET_QUERY_PARAMS',
     updater(state) {
-      state.queryObject = {
-        ...state.queryObject,
+      if (state[scope] === undefined) {
+        state[scope] = defaultQueryObject;
+      }
+      state[scope] = {
+        ...state[scope],
         ...queryObject,
       };
     },

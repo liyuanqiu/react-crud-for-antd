@@ -7,11 +7,12 @@ import {
 } from 'ez-react-redux';
 import { State } from './typing';
 import { queryObject } from '../dummy/queryObject';
+import { scope } from '../dummy/scope';
 
 const { NODE_ENV } = process.env;
 
 const initialState: State = {
-  queryObject,
+  [scope]: queryObject,
 };
 
 const middlewares: Middleware[] = [];

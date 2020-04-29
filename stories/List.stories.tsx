@@ -9,6 +9,7 @@ import {
   CustomColumn,
   I18NContext,
   I18N,
+  Scope,
 } from '..';
 import { dataProvider } from './JPADataProvider';
 
@@ -53,18 +54,7 @@ export interface SLSWorker {
 export function Default() {
   return (
     <BrowserRouter>
-      <AntdCrud dataProvider={dataProvider}>
-        <Filter>
-          <TextFilter field="id" title="数据库ID" />
-          <TextFilter field="name" title="规则名称" />
-        </Filter>
-        <List entity="logCountRule">
-          <TextColumn title="数据库ID" field="id" sortable />
-          <TextColumn title="规则名称" field="name" sortable />
-          <CustomColumn title="规则名称2" dataIndex="name" sorter />
-        </List>
-      </AntdCrud>
-      <I18NContext.Provider value={i18n}>
+      <Scope id="table1">
         <AntdCrud dataProvider={dataProvider}>
           <Filter>
             <TextFilter field="id" title="数据库ID" />
@@ -76,7 +66,22 @@ export function Default() {
             <CustomColumn title="规则名称2" dataIndex="name" sorter />
           </List>
         </AntdCrud>
-      </I18NContext.Provider>
+      </Scope>
+      <Scope id="table2">
+        <I18NContext.Provider value={i18n}>
+          <AntdCrud dataProvider={dataProvider}>
+            <Filter>
+              <TextFilter field="id" title="数据库ID" />
+              <TextFilter field="name" title="规则名称" />
+            </Filter>
+            <List entity="logCountRule">
+              <TextColumn title="数据库ID" field="id" sortable />
+              <TextColumn title="规则名称" field="name" sortable />
+              <CustomColumn title="规则名称2" dataIndex="name" sorter />
+            </List>
+          </AntdCrud>
+        </I18NContext.Provider>
+      </Scope>
     </BrowserRouter>
   );
 }
