@@ -9,8 +9,8 @@ import {
   CustomColumn,
   I18NContext,
   Scope,
-} from '..';
-import type { I18N } from '..';
+} from '../src';
+import type { I18N } from '../src';
 import { dataProvider } from './JPADataProvider';
 
 import 'antd/dist/antd.css';
@@ -74,7 +74,7 @@ export function Default() {
               <TextFilter field="id" title="数据库ID" />
               <TextFilter field="name" title="规则名称" />
             </Filter>
-            <List entity="logCountRule">
+            <List entity="logCountRule" enableSelect={false}>
               <TextColumn title="数据库ID" field="id" sortable />
               <TextColumn title="规则名称" field="name" sortable />
               <CustomColumn title="规则名称2" dataIndex="name" sorter />

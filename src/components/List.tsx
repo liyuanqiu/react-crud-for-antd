@@ -43,6 +43,7 @@ export interface ListProps {
   enableEdit?: boolean;
   enableExport?: boolean;
   enableCreate?: boolean;
+  enableSelect?: boolean;
   pageSizeOptions?: number[];
 }
 
@@ -55,6 +56,7 @@ export function List({
   enableEdit = true,
   enableExport = true,
   enableCreate = true,
+  enableSelect = true,
   pageSizeOptions,
   children,
 }: PropsWithChildren<ListProps>) {
@@ -283,7 +285,7 @@ export function List({
           ...pagination,
           total: data?.total ?? 0,
         }}
-        rowSelection={rowSelection}
+        rowSelection={enableSelect ? rowSelection : undefined}
         onChange={handleTableChange}
       />
     </div>
