@@ -7,6 +7,7 @@ import {
   TextFilter,
   TextColumn,
   CustomColumn,
+  BoolColumn,
   I18NContext,
   Scope,
 } from '../src';
@@ -51,6 +52,11 @@ export interface SLSWorker {
   status: boolean;
 }
 
+const dictionary = {
+  false: '禁用',
+  true: '启用',
+};
+
 export function Default() {
   return (
     <BrowserRouter>
@@ -78,6 +84,13 @@ export function Default() {
               <TextColumn title="数据库ID" field="id" sortable />
               <TextColumn title="规则名称" field="name" sortable />
               <CustomColumn title="规则名称2" dataIndex="name" sorter />
+              <BoolColumn title="状态" field="status" sortable />
+              <BoolColumn
+                title="状态"
+                field="status"
+                sortable
+                dictionary={dictionary}
+              />
             </List>
           </AntdCrud>
         </I18NContext.Provider>
