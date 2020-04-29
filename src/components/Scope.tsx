@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { ScopeContext } from '../context';
 import { queryObject } from '../dummy/queryObject';
-import { setQueryParams, useQueryParam } from '../utils/query';
+import { useQueryParam, initQueryParams } from '../utils/query';
 
 function ScopeChecker({ children }: PropsWithChildren<{}>) {
   const query = useQueryParam();
@@ -19,7 +19,7 @@ export interface ScopeProps {
 
 export function Scope({ id, children }: PropsWithChildren<ScopeProps>) {
   useEffect(() => {
-    setQueryParams(queryObject, id);
+    initQueryParams(queryObject, id);
   }, [id]);
 
   return (

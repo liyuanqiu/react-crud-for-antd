@@ -130,6 +130,20 @@ export function setQueryParams(
   });
 }
 
+/**
+ * 初始化QueryObject
+ */
+export function initQueryParams(queryObject: QueryObject, scope: string) {
+  if (getQueryParam(scope) === undefined) {
+    store.dispatch({
+      type: 'INIT_QUERY_PARAMS',
+      updater(state) {
+        state[scope] = queryObject;
+      },
+    });
+  }
+}
+
 function serialize(value: any) {
   return JSON.stringify(value);
 }
