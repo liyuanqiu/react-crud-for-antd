@@ -17,4 +17,7 @@ export const options: Options = {
   addRoute(entity) {
     return join('/', `${PUBLIC_URL}`, entity, 'add');
   },
+  cloneRoute(entity, id) {
+    return join('/', `${PUBLIC_URL}`, entity, 'add', `${id}`);
+  },
 };

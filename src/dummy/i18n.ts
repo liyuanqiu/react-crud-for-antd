@@ -15,4 +15,5 @@ export const i18n: I18N = {
   export: '导出',
   refreshData: '刷新数据',
   create: '新建',
+  clone: '克隆',
 };

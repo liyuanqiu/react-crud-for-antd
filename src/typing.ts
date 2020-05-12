@@ -29,6 +29,10 @@ export interface Options {
    * add 的路由
    */
   addRoute?: (entity: string) => string;
+  /**
+   * clone 的路由
+   */
+  cloneRoute?: (entity: string, id: number | string) => string;
 }
 
 export interface QueryObject {
@@ -60,4 +64,5 @@ export interface I18N {
   export: string;
   refreshData: string;
   create: string;
+  clone: string;
 }

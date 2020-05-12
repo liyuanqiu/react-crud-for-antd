@@ -44,6 +44,7 @@ export interface ListProps {
   enableExport?: boolean;
   enableCreate?: boolean;
   enableSelect?: boolean;
+  enableClone?: boolean;
   pageSizeOptions?: number[];
 }
 
@@ -57,6 +58,7 @@ export function List({
   enableExport = true,
   enableCreate = true,
   enableSelect = true,
+  enableClone = true,
   pageSizeOptions,
   children,
 }: PropsWithChildren<ListProps>) {
@@ -70,8 +72,12 @@ export function List({
   const { filter } = useFilter();
   const rowSelection = useTableSelection();
 
-  const { editRoute, addRoute } = useContext(OptionsContext);
-  assert(editRoute !== undefined && addRoute !== undefined);
+  const { editRoute, addRoute, cloneRoute } = useContext(OptionsContext);
+  assert(
+    editRoute !== undefined &&
+      addRoute !== undefined &&
+      cloneRoute !== undefined
+  );
 
   const dataProvider = useContext(DataProviderContext);
 
@@ -123,6 +129,13 @@ export function List({
       history.push(editRoute(entity, record.id));
     },
     [editRoute, entity, history]
+  );
+
+  const clone = useCallback(
+    (record: Record) => {
+      history.push(cloneRoute(entity, record.id));
+    },
+    [cloneRoute, entity, history]
   );
 
   const remove = useCallback(
@@ -193,7 +206,7 @@ export function List({
 
   const _columns = useMemo<ColumnsType<Record>>(
     () =>
-      enableDelete || enableEdit
+      enableDelete || enableEdit || enableClone
         ? [
             ...columns,
             {
@@ -202,6 +215,11 @@ export function List({
               render(_, record) {
                 return (
                   <Space>
+                    {enableClone ? (
+                      <Button size="small" onClick={() => clone(record)}>
+                        {i18n.clone}
+                      </Button>
+                    ) : null}
                     {enableEdit ? (
                       <Button
                         size="small"
@@ -226,7 +244,15 @@ export function List({
             },
           ]
         : columns,
-    [columns, edit, removeWithInteractive, enableDelete, enableEdit, i18n]
+    [
+      columns,
+      edit,
+      removeWithInteractive,
+      enableDelete,
+      enableEdit,
+      enableClone,
+      i18n,
+    ]
   );
 
   function batchDelete() {
