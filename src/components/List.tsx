@@ -247,6 +247,7 @@ export function List({
     [
       columns,
       edit,
+      clone,
       removeWithInteractive,
       enableDelete,
       enableEdit,
