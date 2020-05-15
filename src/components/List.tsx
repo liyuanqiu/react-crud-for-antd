@@ -4,6 +4,7 @@ import React, {
   useCallback,
   isValidElement,
   Children,
+  useEffect,
 } from 'react';
 import type { PropsWithChildren } from 'react';
 import { Table, Space, Button, Modal } from 'antd';
@@ -45,6 +46,7 @@ export interface ListProps {
   enableCreate?: boolean;
   enableSelect?: boolean;
   enableClone?: boolean;
+  defaultSorter?: SorterResult<Record>;
   pageSizeOptions?: number[];
 }
 
@@ -60,6 +62,7 @@ export function List({
   enableSelect = true,
   enableClone = true,
   pageSizeOptions,
+  defaultSorter,
   children,
 }: PropsWithChildren<ListProps>) {
   const i18n = useContext(I18NContext);
@@ -109,6 +112,12 @@ export function List({
   );
 
   useErrorNotification(error);
+
+  useEffect(() => {
+    if (defaultSorter !== undefined) {
+      updateSorter(defaultSorter, scope);
+    }
+  }, [defaultSorter, scope]);
 
   const handleTableChange: TableProps<Record>['onChange'] = (_, __, s) => {
     if (
