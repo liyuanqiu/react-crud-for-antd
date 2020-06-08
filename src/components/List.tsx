@@ -48,6 +48,7 @@ export interface ListProps {
   enableClone?: boolean;
   defaultSorter?: SorterResult<Record>;
   pageSizeOptions?: number[];
+  idField?: string;
 }
 
 const dummyData: any[] = [];
@@ -61,6 +62,7 @@ export function List({
   enableCreate = true,
   enableSelect = true,
   enableClone = true,
+  idField = 'id',
   pageSizeOptions,
   defaultSorter,
   children,
@@ -135,29 +137,29 @@ export function List({
 
   const edit = useCallback(
     (record: Record) => {
-      history.push(editRoute(entity, record.id));
+      history.push(editRoute(entity, record[idField]));
     },
-    [editRoute, entity, history]
+    [editRoute, entity, history, idField]
   );
 
   const clone = useCallback(
     (record: Record) => {
-      history.push(cloneRoute(entity, record.id));
+      history.push(cloneRoute(entity, record[idField]));
     },
-    [cloneRoute, entity, history]
+    [cloneRoute, entity, history, idField]
   );
 
   const remove = useCallback(
     async (record: Record) => {
       return dataProvider
         .delete(entity, {
-          id: record.id,
+          id: record[idField],
         })
         .then(({ data: deletedRecord }) => {
           return deletedRecord;
         });
     },
-    [dataProvider, entity]
+    [dataProvider, entity, idField]
   );
 
   const removeWithInteractive = useCallback(
@@ -268,7 +270,7 @@ export function List({
   function batchDelete() {
     batchRemoveWithInteractive(
       data?.data.filter((item) =>
-        rowSelection.selectedRowKeys?.includes(item.id ?? false)
+        rowSelection.selectedRowKeys?.includes(item[idField] ?? false)
       ) ?? []
     );
   }
@@ -312,7 +314,7 @@ export function List({
       </div>
       <div style={{ height: 4 }} />
       <Table
-        rowKey="id"
+        rowKey={idField}
         size={tableSize}
         columns={_columns}
         dataSource={data?.data ?? dummyData}
