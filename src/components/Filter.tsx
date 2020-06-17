@@ -1,7 +1,6 @@
 import React, { useMemo, Children, isValidElement, useContext } from 'react';
 import type { PropsWithChildren } from 'react';
 import { Descriptions, Card, Tag, Row, Col, Select } from 'antd';
-import difference from 'lodash/difference';
 import { FilterOutlined } from '@ant-design/icons';
 import { useFilter } from '../utils/filter';
 import { I18NContext } from '../context';
@@ -33,12 +32,16 @@ export function Filter({ children }: PropsWithChildren<{}>) {
   function handleSelectChange(keys: string[]) {
     updateFilter((draft) => {
       const currentKeys = Object.keys(draft);
-      difference(currentKeys, keys).forEach((key) => {
-        delete draft[key];
-      });
-      difference(keys, currentKeys).forEach((key) => {
-        draft[key] = undefined;
-      });
+      currentKeys
+        .filter((key) => !keys.includes(key))
+        .forEach((key) => {
+          delete draft[key];
+        });
+      keys
+        .filter((key) => !currentKeys.includes(key))
+        .forEach((key) => {
+          draft[key] = undefined;
+        });
     });
   }
 
