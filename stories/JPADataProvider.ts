@@ -1,7 +1,7 @@
 import type { DataProvider } from 'ra-core';
 import { join } from 'path';
 
-const defaultApiUrl = '/hadesrecord/rest/v1';
+const defaultApiUrl = '/hadesconsole/rest/v1';
 
 const resourceMapping: {
   [k: string]: string;

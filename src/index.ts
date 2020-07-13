@@ -3,6 +3,7 @@ export * from './components/Filter';
 export * from './components/List';
 export * from './components/Scope';
 export * from './components/filter-widgets/TextFilter';
+export * from './components/filter-widgets/TimeRangeFilter';
 export * from './components/table-widgets/TextColumn';
 export * from './components/table-widgets/CustomColumn';
 export * from './components/table-widgets/BoolColumn';

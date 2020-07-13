@@ -5,6 +5,7 @@ import {
   List,
   Filter,
   TextFilter,
+  TimeRangeFilter,
   TextColumn,
   CustomColumn,
   BoolColumn,
@@ -33,6 +34,7 @@ const i18n: I18N = {
   export: 'Export',
   refreshData: 'Refresh Data',
   create: 'Create',
+  clone: 'Clone',
 };
 
 export default {
@@ -65,6 +67,7 @@ export function Default() {
           <Filter>
             <TextFilter field="id" title="数据库ID" />
             <TextFilter field="name" title="规则名称" />
+            <TimeRangeFilter field="ts" title="时间" />
           </Filter>
           <List entity="logCountRule">
             <TextColumn title="数据库ID" field="id" sortable />
