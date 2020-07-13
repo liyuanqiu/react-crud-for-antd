@@ -26,7 +26,12 @@ export function parse(node: ReactNode): ColumnType<Record> {
         dataIndex: node.props.field,
         sorter: node.props.sortable,
         render(value) {
-          return moment(value).format(node.props.format ?? 'YYYY-MM-DD HH:mm');
+          if (typeof value === 'number' && value > 0) {
+            return moment(value).format(
+              node.props.format ?? 'YYYY-MM-DD HH:mm'
+            );
+          }
+          return value;
         },
       };
     case BoolColumn:
