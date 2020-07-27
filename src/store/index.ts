@@ -23,6 +23,11 @@ const enhancer = applyMiddleware(...middlewares);
 
 export const store = createStore(initialState, enhancer);
 
+if (NODE_ENV === 'development') {
+  // @ts-ignore
+  window.__react_crud_for_antd_store = store;
+}
+
 export function useSelector<VT = unknown>(selector: Selector<State, VT>) {
   return useSelectorOrigin(store, selector);
 }
