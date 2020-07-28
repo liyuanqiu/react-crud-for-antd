@@ -20,7 +20,7 @@ export default {
 export function Default() {
   return (
     <BrowserRouter>
-      <Scope id="table1">
+      <Scope id="entity-filter">
         <AntdCrud dataProvider={dataProvider}>
           <Filter>
             <TextFilter field="id" title="数据库ID" />

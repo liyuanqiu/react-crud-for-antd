@@ -1,8 +1,8 @@
 import React from 'react';
 import { Radio } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
-import { useFilter } from '../../utils/filter';
 import { assert } from '../../utils/common';
+import { CommonFilter } from './CommonFilter';
 import type { FilterInputProps } from '../../typing';
 
 export interface SwitchFilterProps extends FilterInputProps {
@@ -29,30 +29,30 @@ const dummyValueMapping: SwitchFilterProps['valueMapping'] = [
   },
 ];
 
+function parseChangeEvent(e: RadioChangeEvent) {
+  return e.target.value;
+}
+
 export function SwitchFilter({
   field,
+  title,
   valueMapping = dummyValueMapping,
 }: SwitchFilterProps) {
-  const { filter, updateFilter } = useFilter();
-  function handleChange(e: RadioChangeEvent) {
-    updateFilter((draft) => {
-      draft[field] = e.target.value;
-    });
-  }
   assert(valueMapping !== undefined);
   return (
-    <Radio.Group
-      size="small"
-      value={filter[field]}
-      onChange={handleChange}
-      buttonStyle="solid"
+    <CommonFilter
+      title={title}
+      field={field}
+      parseChangeEvent={parseChangeEvent}
     >
-      <Radio.Button value={valueMapping[0].value}>
-        {valueMapping[0].label}
-      </Radio.Button>
-      <Radio.Button value={valueMapping[1].value}>
-        {valueMapping[1].label}
-      </Radio.Button>
-    </Radio.Group>
+      <Radio.Group size="small" buttonStyle="solid">
+        <Radio.Button value={valueMapping[0].value}>
+          {valueMapping[0].label}
+        </Radio.Button>
+        <Radio.Button value={valueMapping[1].value}>
+          {valueMapping[1].label}
+        </Radio.Button>
+      </Radio.Group>
+    </CommonFilter>
   );
 }

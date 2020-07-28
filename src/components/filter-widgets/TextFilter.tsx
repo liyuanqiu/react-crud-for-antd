@@ -1,24 +1,22 @@
 import React, { ChangeEvent } from 'react';
 import { Input } from 'antd';
-import { useFilter } from '../../utils/filter';
+import { CommonFilter } from './CommonFilter';
 import type { FilterInputProps } from '../../typing';
+
+function parseChangeEvent(e: ChangeEvent<HTMLInputElement>) {
+  return e.target.value;
+}
 
 export interface TextFilterProps extends FilterInputProps {}
 
 export function TextFilter({ field, title }: TextFilterProps) {
-  const { filter, updateFilter } = useFilter();
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    updateFilter((draft) => {
-      draft[field] = e.target.value;
-    });
-  }
   return (
-    <Input
-      allowClear
-      alt={title}
-      size="small"
-      value={filter[field]}
-      onChange={handleChange}
-    />
+    <CommonFilter
+      title={title}
+      field={field}
+      parseChangeEvent={parseChangeEvent}
+    >
+      <Input allowClear size="small" />
+    </CommonFilter>
   );
 }

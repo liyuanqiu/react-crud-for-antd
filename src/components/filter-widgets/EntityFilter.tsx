@@ -1,10 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import type { Record } from 'ra-core';
-import { useFilter } from '../../utils/filter';
 import { DataProviderContext } from '../../context';
 import { queryObject } from '../../dummy/queryObject';
+import { CommonFilter } from './CommonFilter';
 import type { FilterInputProps } from '../../typing';
+
+function parseChangeEvent(e: unknown) {
+  return e;
+}
 
 export interface EntityFilterProps extends FilterInputProps {
   /* 目标 entity */
@@ -19,13 +23,13 @@ export interface EntityFilterProps extends FilterInputProps {
 
 export function EntityFilter({
   field,
+  title,
   target,
   labelField,
   valueField,
   width,
 }: EntityFilterProps) {
   const dataProvider = useContext(DataProviderContext);
-  const { filter, updateFilter } = useFilter();
   const [entities, setEntities] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -42,29 +46,28 @@ export function EntityFilter({
       .then((result) => setEntities(result.data))
       .finally(() => setLoading(false));
   }, [dataProvider, target]);
-  function handleChange(e: unknown) {
-    updateFilter((draft) => {
-      draft[field] = e;
-    });
-  }
 
   return (
-    <Select
-      loading={loading}
-      allowClear
-      size="small"
-      value={filter[field]}
-      style={{
-        width,
-      }}
-      showSearch
-      onChange={handleChange}
+    <CommonFilter
+      title={title}
+      field={field}
+      parseChangeEvent={parseChangeEvent}
     >
-      {entities.map((entity) => (
-        <Select.Option value={entity[valueField]}>
-          {entity[labelField ?? valueField]}
-        </Select.Option>
-      ))}
-    </Select>
+      <Select
+        loading={loading}
+        allowClear
+        size="small"
+        style={{
+          width,
+        }}
+        showSearch
+      >
+        {entities.map((entity) => (
+          <Select.Option value={entity[valueField]}>
+            {entity[labelField ?? valueField]}
+          </Select.Option>
+        ))}
+      </Select>
+    </CommonFilter>
   );
 }

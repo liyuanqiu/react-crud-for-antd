@@ -6,6 +6,7 @@ export * from './components/filter-widgets/TextFilter';
 export * from './components/filter-widgets/TimeRangeFilter';
 export * from './components/filter-widgets/EntityFilter';
 export * from './components/filter-widgets/SwitchFilter';
+export * from './components/filter-widgets/CommonFilter';
 export * from './components/table-widgets/TextColumn';
 export * from './components/table-widgets/TimeColumn';
 export * from './components/table-widgets/CustomColumn';

@@ -38,7 +38,7 @@ const statusValueMapping: SwitchFilterProps['valueMapping'] = [
 export function Default() {
   return (
     <BrowserRouter>
-      <Scope id="table1">
+      <Scope id="switch-filter">
         <AntdCrud dataProvider={dataProvider}>
           <Filter>
             <TextFilter field="id" title="数据库ID" />
