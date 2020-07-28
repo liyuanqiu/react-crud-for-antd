@@ -27,7 +27,7 @@ export function EntityFilter({
   target,
   labelField,
   valueField,
-  width,
+  width = 200,
 }: EntityFilterProps) {
   const dataProvider = useContext(DataProviderContext);
   const [entities, setEntities] = useState<Record[]>([]);
