@@ -1,11 +1,38 @@
-import React, { useMemo, Children, isValidElement, useContext } from 'react';
+import React, {
+  useMemo,
+  Children,
+  isValidElement,
+  useContext,
+  useEffect,
+} from 'react';
 import type { PropsWithChildren } from 'react';
 import { Descriptions, Card, Tag, Row, Col, Select } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
 import { useFilter } from '../utils/filter';
-import { I18NContext } from '../context';
+import { I18NContext, ScopeContext } from '../context';
+import { store } from '../store';
 
-export function Filter({ children }: PropsWithChildren<{}>) {
+export interface FilterProps {
+  defaultSelectedKeys?: string[];
+}
+
+export function Filter({
+  defaultSelectedKeys = [],
+  children,
+}: PropsWithChildren<FilterProps>) {
+  const scope = useContext(ScopeContext);
+  useEffect(() => {
+    store.dispatch({
+      type: 'SET_DEFALUT_SELECTED_KEYS',
+      updater(state) {
+        defaultSelectedKeys.forEach((key) => {
+          if (state[scope].filter[key] === undefined) {
+            state[scope].filter[key] = undefined;
+          }
+        });
+      },
+    });
+  }, [defaultSelectedKeys, scope]);
   const { filter, updateFilter } = useFilter();
   const i18n = useContext(I18NContext);
 

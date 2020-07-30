@@ -64,7 +64,7 @@ export function Default() {
     <BrowserRouter>
       <Scope id="table1">
         <AntdCrud dataProvider={dataProvider}>
-          <Filter>
+          <Filter defaultSelectedKeys={['id']}>
             <TextFilter field="id" title="数据库ID" />
             <TextFilter field="name" title="规则名称" />
             <TimeRangeFilter field="ts" title="时间" />
