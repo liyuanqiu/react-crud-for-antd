@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Select } from 'antd';
 import type { Record } from 'ra-core';
 import { DataProviderContext } from '../../context';
-import { queryObject } from '../../dummy/queryObject';
 import { CommonFilter } from './CommonFilter';
 import type { FilterInputProps } from '../../typing';
 
@@ -37,8 +36,9 @@ export function EntityFilter({
     dataProvider
       .getList(target, {
         pagination: {
-          page: -1,
-          perPage: queryObject.size,
+          page: 0,
+          // may cause bugs
+          perPage: 99999,
         },
         sort: { field: '', order: '' },
         filter: {},
