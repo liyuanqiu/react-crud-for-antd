@@ -345,4 +345,4 @@ function ListCore(
   );
 }
 
-export const List = forwardRef(ListCore);
+export const List = forwardRef<unknown, PropsWithChildren<ListProps>>(ListCore);
