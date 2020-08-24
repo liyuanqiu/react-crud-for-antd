@@ -50,7 +50,7 @@ export interface ListProps {
   defaultSorter?: SorterResult<Record>;
   pageSizeOptions?: number[];
   idField?: string;
-  moreActions?(record: Record): ReactNode[];
+  moreActions?(record: Record): ReactNode;
 }
 
 const dummyData: any[] = [];
