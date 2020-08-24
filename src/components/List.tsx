@@ -6,6 +6,9 @@ import React, {
   Children,
   useEffect,
   ReactNode,
+  forwardRef,
+  useImperativeHandle,
+  Ref,
 } from 'react';
 import type { PropsWithChildren } from 'react';
 import { Table, Space, Button, Modal } from 'antd';
@@ -55,21 +58,24 @@ export interface ListProps {
 
 const dummyData: any[] = [];
 
-export function List({
-  entity,
-  tableSize = 'small',
-  enableDelete = true,
-  enableEdit = true,
-  enableExport = true,
-  enableCreate = true,
-  enableSelect = true,
-  enableClone = true,
-  idField = 'id',
-  pageSizeOptions,
-  defaultSorter,
-  moreActions,
-  children,
-}: PropsWithChildren<ListProps>) {
+function ListCore(
+  {
+    entity,
+    tableSize = 'small',
+    enableDelete = true,
+    enableEdit = true,
+    enableExport = true,
+    enableCreate = true,
+    enableSelect = true,
+    enableClone = true,
+    idField = 'id',
+    pageSizeOptions,
+    defaultSorter,
+    moreActions,
+    children,
+  }: PropsWithChildren<ListProps>,
+  ref: Ref<unknown>
+) {
   const i18n = useContext(I18NContext);
   const scope = useContext(ScopeContext);
 
@@ -280,6 +286,10 @@ export function List({
     );
   }
 
+  useImperativeHandle(ref, () => ({
+    refresh: revalidate,
+  }));
+
   return (
     <div>
       <div
@@ -334,3 +344,5 @@ export function List({
     </div>
   );
 }
+
+export const List = forwardRef(ListCore);
