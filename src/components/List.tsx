@@ -5,6 +5,7 @@ import React, {
   isValidElement,
   Children,
   useEffect,
+  ReactNode,
 } from 'react';
 import type { PropsWithChildren } from 'react';
 import { Table, Space, Button, Modal } from 'antd';
@@ -49,6 +50,7 @@ export interface ListProps {
   defaultSorter?: SorterResult<Record>;
   pageSizeOptions?: number[];
   idField?: string;
+  moreActions?(record: Record): ReactNode[];
 }
 
 const dummyData: any[] = [];
@@ -65,6 +67,7 @@ export function List({
   idField = 'id',
   pageSizeOptions,
   defaultSorter,
+  moreActions,
   children,
 }: PropsWithChildren<ListProps>) {
   const i18n = useContext(I18NContext);
@@ -249,6 +252,7 @@ export function List({
                         {i18n.delete}
                       </Button>
                     ) : null}
+                    {moreActions ? moreActions(record) : null}
                   </Space>
                 );
               },
@@ -264,6 +268,7 @@ export function List({
       enableEdit,
       enableClone,
       i18n,
+      moreActions,
     ]
   );
 
