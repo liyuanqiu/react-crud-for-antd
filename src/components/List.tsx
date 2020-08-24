@@ -56,6 +56,10 @@ export interface ListProps {
   moreActions?(record: Record): ReactNode;
 }
 
+export interface ListRef {
+  refresh(): Promise<boolean>;
+}
+
 const dummyData: any[] = [];
 
 function ListCore(
@@ -74,7 +78,7 @@ function ListCore(
     moreActions,
     children,
   }: PropsWithChildren<ListProps>,
-  ref: Ref<unknown>
+  ref: Ref<ListRef>
 ) {
   const i18n = useContext(I18NContext);
   const scope = useContext(ScopeContext);
@@ -345,4 +349,4 @@ function ListCore(
   );
 }
 
-export const List = forwardRef<unknown, PropsWithChildren<ListProps>>(ListCore);
+export const List = forwardRef<ListRef, PropsWithChildren<ListProps>>(ListCore);
