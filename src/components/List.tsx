@@ -230,7 +230,7 @@ function ListCore(
 
   const _columns = useMemo<ColumnsType<Record>>(
     () =>
-      enableDelete || enableEdit || enableClone
+      enableDelete || enableEdit || enableClone || moreActions
         ? [
             ...columns,
             {
