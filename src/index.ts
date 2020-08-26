@@ -4,6 +4,7 @@ export * from './components/List';
 export * from './components/Scope';
 export * from './components/filter-widgets/TextFilter';
 export * from './components/filter-widgets/TimeRangeFilter';
+export * from './components/filter-widgets/DateRangeFilter';
 export * from './components/filter-widgets/EntityFilter';
 export * from './components/filter-widgets/SwitchFilter';
 export * from './components/filter-widgets/SelectFilter';
