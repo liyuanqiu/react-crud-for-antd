@@ -27,6 +27,9 @@ function parseChangeEvent(e: [Moment | null, Moment | null] | null) {
 
 export interface DateRangeFilterProps extends FilterInputProps {
   timeFormat?: string;
+  ranges?: {
+    [name: string]: [Moment, Moment];
+  };
 }
 
 const eventHandlerNames = ['onChange', 'onOk'];
@@ -35,6 +38,7 @@ export function DateRangeFilter({
   title,
   field,
   timeFormat = 'YYYY-MM-DD',
+  ranges,
 }: DateRangeFilterProps) {
   return (
     <CommonFilter
@@ -44,7 +48,12 @@ export function DateRangeFilter({
       parseChangeEvent={parseChangeEvent}
       parseValue={parseValue}
     >
-      <DatePicker.RangePicker allowClear size="small" format={timeFormat} />
+      <DatePicker.RangePicker
+        allowClear
+        size="small"
+        format={timeFormat}
+        ranges={ranges}
+      />
     </CommonFilter>
   );
 }
