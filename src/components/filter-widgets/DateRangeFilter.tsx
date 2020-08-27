@@ -8,8 +8,8 @@ function parseValue(value: any): [Moment | null, Moment | null] | null {
   if (typeof value === 'string' && value.length > 0) {
     const [t1, t2] = value.split(',');
     return [
-      t1 === '' ? null : moment(parseInt(t1, 10)).startOf('day'),
-      t2 === '' ? null : moment(parseInt(t2, 10)).startOf('day'),
+      t1 === '' ? null : moment(parseInt(t1, 10)),
+      t2 === '' ? null : moment(parseInt(t2, 10)),
     ];
   }
   return null;
@@ -18,7 +18,7 @@ function parseValue(value: any): [Moment | null, Moment | null] | null {
 function parseChangeEvent(e: [Moment | null, Moment | null] | null) {
   if (e !== null) {
     return e
-      .map((item: Moment | null) => (item === null ? '' : +item.startOf('day')))
+      .map((item: Moment | null) => (item === null ? '' : +item))
       .join(',');
   } else {
     return '';
