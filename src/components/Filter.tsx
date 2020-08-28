@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import type { PropsWithChildren } from 'react';
-import { Descriptions, Card, Tag, Row, Col, Select } from 'antd';
+import { Card, Tag, Row, Col, Select, Space } from 'antd';
 import { FilterOutlined } from '@ant-design/icons';
 import { useFilter } from '../utils/filter';
 import { I18NContext, ScopeContext } from '../context';
@@ -98,7 +98,7 @@ export function Filter({
         </Row>
       }
     >
-      <Descriptions column={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3, xxl: 5 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {Children.map(children, (element) => {
           if (!isValidElement(element)) {
             return null;
@@ -106,12 +106,20 @@ export function Filter({
           const { field, title } = element.props;
           if (filter.hasOwnProperty(field)) {
             return (
-              <Descriptions.Item label={title}>{element}</Descriptions.Item>
+              <div
+                key={title}
+                style={{ display: 'flex', padding: '8px 8px 0 8px' }}
+              >
+                <Space>
+                  <div>{title}: </div>
+                  <div>{element}</div>
+                </Space>
+              </div>
             );
           }
           return null;
         })}
-      </Descriptions>
+      </div>
     </Card>
   );
 }
