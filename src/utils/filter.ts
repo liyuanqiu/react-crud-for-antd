@@ -1,15 +1,18 @@
 import produce from 'immer';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { ScopeContext } from '../context';
 import { useQueryParam, setQueryParams } from './query';
 import type { QueryObject } from '../typing';
 
-export function useFilter(): {
+export function useFilter(
+  useScope?: string
+): {
   filter: QueryObject['filter'];
   updateFilter: (updater: (draft: QueryObject['filter']) => void) => void;
 } {
-  const scope = useContext(ScopeContext);
-  const { filter } = useQueryParam();
+  const selfScope = useContext(ScopeContext);
+  const scope = useMemo(() => useScope ?? selfScope, [useScope, selfScope]);
+  const { filter } = useQueryParam(scope);
 
   function updateFilter(updater: (draft: QueryObject['filter']) => void) {
     const nextFilter = produce(filter, updater);

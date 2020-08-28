@@ -1,7 +1,7 @@
 /* 只维护指定的字段 */
 
 import { useHistory } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { useSelector, store } from '../store';
 import type { QueryObject } from '../typing';
 import { OptionsContext, ScopeContext } from '../context';
@@ -78,8 +78,9 @@ export function useInitParamsFromUrl() {
 /**
  * react hook 使用查询参数
  */
-export function useQueryParam() {
-  const scope = useContext(ScopeContext);
+export function useQueryParam(useScope?: string) {
+  const selfScope = useContext(ScopeContext);
+  const scope = useMemo(() => useScope ?? selfScope, [useScope, selfScope]);
   return useSelector((state) => state[scope]);
 }
 

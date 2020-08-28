@@ -53,6 +53,8 @@ export interface ListProps {
   defaultSorter?: SorterResult<Record>;
   pageSizeOptions?: number[];
   idField?: string;
+  // specify to use another scope's filter
+  filterScope?: string;
   moreActions?(record: Record): ReactNode;
 }
 
@@ -75,6 +77,7 @@ function ListCore(
     idField = 'id',
     pageSizeOptions,
     defaultSorter,
+    filterScope,
     moreActions,
     children,
   }: PropsWithChildren<ListProps>,
@@ -87,7 +90,7 @@ function ListCore(
 
   const { pagination, page, size } = useTablePagination(pageSizeOptions);
   const sorter = useTableSorter();
-  const { filter } = useFilter();
+  const { filter } = useFilter(filterScope);
   const rowSelection = useTableSelection();
 
   const { editRoute, addRoute, cloneRoute } = useContext(OptionsContext);
