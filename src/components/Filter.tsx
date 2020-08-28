@@ -98,7 +98,7 @@ export function Filter({
         </Row>
       }
     >
-      <Descriptions column={{ xs: 1, sm: 1, md: 1, lg: 2, xl: 3, xxl: 4 }}>
+      <Descriptions column={{ xs: 1, sm: 1, md: 2, lg: 3, xl: 3, xxl: 5 }}>
         {Children.map(children, (element) => {
           if (!isValidElement(element)) {
             return null;
