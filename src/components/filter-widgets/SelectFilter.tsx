@@ -43,10 +43,16 @@ export function SelectFilter({
         {options.map((option) => {
           if (typeof option === 'object') {
             return (
-              <Select.Option value={option.value}>{option.label}</Select.Option>
+              <Select.Option key={option.value} value={option.value}>
+                {option.label}
+              </Select.Option>
             );
           }
-          return <Select.Option value={option}>{option}</Select.Option>;
+          return (
+            <Select.Option key={option} value={option}>
+              {option}
+            </Select.Option>
+          );
         })}
       </Select>
     </CommonFilter>
