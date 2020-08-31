@@ -77,9 +77,9 @@ export function Filter({
       title={<Tag icon={<FilterOutlined />}>{i18n.filterTitle}</Tag>}
       bordered={false}
       extra={
-        <Row gutter={8} style={{ width: 300 }}>
-          <Col span={6}>{i18n.filterFieldTitle}</Col>
-          <Col span={18}>
+        <Row gutter={8} style={{ width: 500 }}>
+          <Col span={4}>{i18n.filterFieldTitle}:</Col>
+          <Col span={20}>
             <Select<string[]>
               size="small"
               style={{ width: '100%' }}
