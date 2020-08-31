@@ -18,6 +18,8 @@ export interface EntityFilterProps extends FilterInputProps {
   valueField: string;
   /* Select 的宽度 */
   width?: number;
+  /* 同 antd Select 的 optionFilterProp */
+  optionFilterProp?: string;
 }
 
 export function EntityFilter({
@@ -26,6 +28,7 @@ export function EntityFilter({
   target,
   labelField,
   valueField,
+  optionFilterProp,
   width = 200,
 }: EntityFilterProps) {
   const dataProvider = useContext(DataProviderContext);
@@ -57,6 +60,7 @@ export function EntityFilter({
         loading={loading}
         allowClear
         size="small"
+        optionFilterProp={optionFilterProp}
         style={{
           width,
         }}
