@@ -3,7 +3,7 @@ module.exports = function expressMiddleware(router) {
   router.use(
     '/hadesconsole/',
     createProxyMiddleware({
-      target: 'http://supervisor.virgo.wz-inc.com',
+      target: 'http://xxx.com',
       changeOrigin: true,
     })
   );
