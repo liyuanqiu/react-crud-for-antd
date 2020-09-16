@@ -26,6 +26,7 @@ export function CommonFilter({
 }: CommonFilterProps) {
   const { filter, updateFilter } = useFilter();
   useEffect(() => {
+    console.log(defaultValue, field, updateFilter);
     updateFilter((draft) => {
       draft[field] = defaultValue;
     });
