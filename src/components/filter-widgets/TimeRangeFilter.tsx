@@ -35,6 +35,7 @@ const eventHandlerNames = ['onChange', 'onOk'];
 export function TimeRangeFilter({
   title,
   field,
+  defaultValue,
   showTimeFormat = 'HH:mm',
   timeFormat = 'YYYY-MM-DD HH:mm',
 }: TimeRangeFilterProps) {
@@ -42,6 +43,7 @@ export function TimeRangeFilter({
     <CommonFilter
       title={title}
       field={field}
+      defaultValue={defaultValue}
       eventHandlerNames={eventHandlerNames}
       parseChangeEvent={parseChangeEvent}
       parseValue={parseValue}

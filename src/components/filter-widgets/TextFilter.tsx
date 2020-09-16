@@ -9,11 +9,12 @@ function parseChangeEvent(e: ChangeEvent<HTMLInputElement>) {
 
 export interface TextFilterProps extends FilterInputProps {}
 
-export function TextFilter({ field, title }: TextFilterProps) {
+export function TextFilter({ field, title, defaultValue }: TextFilterProps) {
   return (
     <CommonFilter
       title={title}
       field={field}
+      defaultValue={defaultValue}
       parseChangeEvent={parseChangeEvent}
     >
       <Input allowClear size="small" />

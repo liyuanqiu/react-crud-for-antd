@@ -28,6 +28,7 @@ export function EntityFilter({
   target,
   labelField,
   valueField,
+  defaultValue,
   optionFilterProp,
   width = 200,
 }: EntityFilterProps) {
@@ -54,6 +55,7 @@ export function EntityFilter({
     <CommonFilter
       title={title}
       field={field}
+      defaultValue={defaultValue}
       parseChangeEvent={parseChangeEvent}
     >
       <Select

@@ -23,6 +23,7 @@ export interface SelectFilterProps extends FilterInputProps {
 export function SelectFilter({
   field,
   title,
+  defaultValue,
   width = 200,
   options,
 }: SelectFilterProps) {
@@ -30,6 +31,7 @@ export function SelectFilter({
     <CommonFilter
       title={title}
       field={field}
+      defaultValue={defaultValue}
       parseChangeEvent={parseChangeEvent}
     >
       <Select

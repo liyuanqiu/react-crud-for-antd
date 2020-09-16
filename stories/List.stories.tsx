@@ -65,7 +65,7 @@ export function Default() {
       <Scope id="table1">
         <AntdCrud dataProvider={dataProvider}>
           <Filter defaultSelectedKeys={['id']}>
-            <TextFilter field="id" title="数据库ID" />
+            <TextFilter field="id" title="数据库ID" defaultValue={2} />
             <TextFilter field="name" title="规则名称" />
             <TimeRangeFilter field="ts" title="时间" />
           </Filter>

@@ -4,6 +4,7 @@ import React, {
   isValidElement,
   useMemo,
   useCallback,
+  useEffect,
 } from 'react';
 import { useFilter } from '../../utils/filter';
 import type { FilterInputProps } from '../../typing';
@@ -17,12 +18,18 @@ export interface CommonFilterProps extends FilterInputProps {
 
 export function CommonFilter({
   field,
+  defaultValue,
   parseValue,
   parseChangeEvent,
   eventHandlerNames,
   children,
 }: CommonFilterProps) {
   const { filter, updateFilter } = useFilter();
+  useEffect(() => {
+    updateFilter((draft) => {
+      draft[field] = defaultValue;
+    });
+  }, [defaultValue, field, updateFilter]);
   const value = useMemo(() => {
     if (parseValue === undefined) {
       return filter[field];

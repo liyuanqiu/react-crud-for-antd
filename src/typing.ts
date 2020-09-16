@@ -47,6 +47,7 @@ export interface QueryObject {
 export interface FilterInputProps {
   title: string;
   field: string;
+  defaultValue?: any;
 }
 
 export interface I18N {

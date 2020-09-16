@@ -36,6 +36,7 @@ function parseChangeEvent(e: RadioChangeEvent) {
 export function SwitchFilter({
   field,
   title,
+  defaultValue,
   valueMapping = dummyValueMapping,
 }: SwitchFilterProps) {
   assert(valueMapping !== undefined);
@@ -43,6 +44,7 @@ export function SwitchFilter({
     <CommonFilter
       title={title}
       field={field}
+      defaultValue={defaultValue}
       parseChangeEvent={parseChangeEvent}
     >
       <Radio.Group size="small" buttonStyle="solid">
