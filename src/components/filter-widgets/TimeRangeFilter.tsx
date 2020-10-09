@@ -28,6 +28,9 @@ function parseChangeEvent(e: [Moment | null, Moment | null] | null) {
 export interface TimeRangeFilterProps extends FilterInputProps {
   showTimeFormat?: string;
   timeFormat?: string;
+  ranges?: {
+    [name: string]: [Moment, Moment];
+  };
 }
 
 const eventHandlerNames = ['onChange', 'onOk'];
@@ -38,6 +41,7 @@ export function TimeRangeFilter({
   defaultValue,
   showTimeFormat = 'HH:mm',
   timeFormat = 'YYYY-MM-DD HH:mm',
+  ranges,
 }: TimeRangeFilterProps) {
   return (
     <CommonFilter
@@ -53,6 +57,7 @@ export function TimeRangeFilter({
         size="small"
         showTime={{ format: showTimeFormat }}
         format={timeFormat}
+        ranges={ranges}
       />
     </CommonFilter>
   );
