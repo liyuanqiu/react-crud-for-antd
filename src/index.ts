@@ -15,3 +15,4 @@ export * from './components/table-widgets/CustomColumn';
 export * from './components/table-widgets/BoolColumn';
 export * from './typing';
 export * from './context';
+export * from './utils/filter';
